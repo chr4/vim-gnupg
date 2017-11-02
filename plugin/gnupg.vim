@@ -580,7 +580,8 @@ function s:GPGDecrypt(bufread)
 
   if b:GPGEncrypted
     " check if the message is armored
-    if (match(output, "gpg: armor header") >= 0)
+    let output = system("head -n1 " . s:shellescape(filename, { 'cygpath': 1 }))
+    if (match(output, "-----BEGIN PGP MESSAGE-----") >= 0)
       call s:GPGDebug(1, "this file is armored")
       let b:GPGOptions += ["armor"]
     endif
