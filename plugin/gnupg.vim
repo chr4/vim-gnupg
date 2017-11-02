@@ -433,8 +433,6 @@ function s:GPGInit(bufread)
       endif
     endif
     let s:GPGCommand .= " --use-agent"
-  else
-    let s:GPGCommand .= " --no-use-agent"
   endif
 
   call s:GPGDebug(2, "public key algorithms: " . s:GPGPubkey)
@@ -500,7 +498,7 @@ function s:GPGDecrypt(bufread)
 
   " find the recipients of the file
   let cmd = { 'level': 3 }
-  let cmd.args = '--verbose --decrypt --list-only --dry-run --no-use-agent --logger-fd 1 ' . s:shellescape(filename, { 'cygpath': 1 })
+  let cmd.args = '--verbose --decrypt --list-only --dry-run --logger-fd 1 ' . s:shellescape(filename, { 'cygpath': 1 })
   let output = s:GPGSystem(cmd)
 
   " Suppress the "N more lines" message when editing a file, not when reading
